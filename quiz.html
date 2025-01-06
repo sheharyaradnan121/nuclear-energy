@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Quiz App</title>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+
+    *  {
+    margin: 0;
+    padding: 0;
+    font-family: 'poppins', 'sans-serrif';
+    box-sizing: border-box;
+}
+
+body  {
+    background: linear-gradient(135deg, #0b0c10, #1f2833);
+    height: 100vh;
+}
+
+.app  {
+    background:none;
+    backdrop-filter: blur(10000px);
+    width: 90%;
+    max-width: 600px;
+    margin: 50px auto 0;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.app h1  {
+     font-size: 25px;
+     color: #66fcf1;
+     font-weight: 600;
+     border-bottom: 1px solid #333;
+     padding-bottom: 30px;     
+}
+
+.quiz  {
+    padding: 20px 0;
+
+}
+
+.quiz h2  {
+    font-size: 18px;
+    color:#66fcf1;
+    font-weight: 600;
+}
+
+.btn  {
+    background: none;
+    backdrop-filter: blur(10000000px);
+    color: #66fcf1;
+    font-weight: 500;
+    width: 100%; 
+    border: 1px solid #66fcf1;
+    padding: 10px;
+    margin: 10px 0; 
+    text-align: left;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 100ms; 
+}
+
+.btn:hover:not([disabled])  {
+    background: #222;
+    color: #fff;
+}
+
+.btn:disabled {
+    cursor: no-drop;
+}
+
+#next-btn  {
+    background: #66fcf1;
+    color: black;
+    font-weight: 500;
+    width: 150px;
+    border: 0;
+    padding: 10px;
+    margin: 20px auto 0;
+    border-radius: 4px;
+    cursor: pointer;  
+    display: none;
+
+}
+
+.correct {
+    background: #9aeabc;
+    color:black;
+
+}
+
+.incorrect {
+    background: #ff9393;
+    color:black;
+
+}
+#return{
+    position:relative;
+    top:10px;
+    left:30px;
+    z-index: 1000;
+    fill:white;
+}
+    #return:hover{
+    fill:#66fcf1;
+}
+  </style>
+</head>
+<body>
+    <a href="index.html"><svg id="return" fill="" width="60px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>return</title> <path d="M0 21.984q0.032-0.8 0.608-1.376l4-4q0.448-0.48 1.056-0.576t1.12 0.128 0.864 0.736 0.352 1.12v1.984h18.016q0.8 0 1.408-0.576t0.576-1.408v-8q0-0.832-0.576-1.408t-1.408-0.608h-16q-0.736 0-1.248-0.416t-0.64-0.992 0-1.152 0.64-1.024 1.248-0.416h16q2.464 0 4.224 1.76t1.76 4.256v8q0 2.496-1.76 4.224t-4.224 1.76h-18.016v2.016q0 0.64-0.352 1.152t-0.896 0.704-1.12 0.096-1.024-0.544l-4-4q-0.64-0.608-0.608-1.44z"></path> </g></svg></a>
+    <div class="app"> 
+        <h1>Quiz</h1>
+        <div class="quiz">
+            <h2 id="question">Question goes here</h2>
+            <div id="answer-buttons">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+            <button id="next-btn">Next</button>
+        </div>
+  <script>
+    
+    console.log(1);
+    const unsorted_questions =[
+    {
+        question: "What was the biggest nuclear disaster in history?",
+        answers: [
+            { text: "Three Mile Island", correct: false },
+            { text: "Fukushima", correct: false },
+            { text: "Chernobyl", correct: true },
+            { text: "Sellafield", correct: false }
+        ]
+    },
+    {
+        question: "What was the most recent major nuclear disaster?",
+        answers: [
+            { text: "Chernobyl", correct: false },
+            { text: "Fukushima", correct: true },
+            { text: "Three Mile Island", correct: false },
+            { text: "Hanford", correct: false }
+        ]
+    },
+    {
+        question: "Why did nuclear energy catch on so quickly in the 20th century?",
+        answers: [
+            { text: "It was cheaper than coal", correct: false },
+            { text: "It was heavily funded and supported by governments", correct: true },
+            { text: "It required no maintenance", correct: false },
+            { text: "It was the safest energy source at the time", correct: false }
+        ]
+    },
+    {
+        question: "Why is there so much public distrust in nuclear energy?",
+        answers: [
+            { text: "It is extremely expensive", correct: false },
+            { text: "It has been linked to disasters and radiation risks", correct: true },
+            { text: "It pollutes the air", correct: false },
+            { text: "It consumes too much land", correct: false }
+        ]
+    },
+    {
+        question: "Why is nuclear fission important for energy generation?",
+        answers: [
+            { text: "It produces greenhouse gases", correct: false },
+            { text: "It creates large amounts of energy from small amounts of fuel", correct: true },
+            { text: "It is used to produce solar panels", correct: false },
+            { text: "It eliminates the need for uranium", correct: false }
+        ]
+    },
+    {
+        question: "What is one major economic barrier to entry for nuclear energy?",
+        answers: [
+            { text: "High operational costs", correct: false },
+            { text: "High upfront capital costs", correct: true },
+            { text: "It requires coal infrastructure", correct: false },
+            { text: "It relies heavily on wind resources", correct: false }
+        ]
+    },
+    {
+        question: "Which country leads the world in nuclear reactor construction?",
+        answers: [
+            { text: "United States", correct: false },
+            { text: "China", correct: true },
+            { text: "France", correct: false },
+            { text: "Russia", correct: false }
+        ]
+    },
+    {
+        question: "What is the main purpose of a nuclear reactor?",
+        answers: [
+            { text: "To produce electricity", correct: true },
+            { text: "To mine uranium", correct: false },
+            { text: "To create nuclear weapons", correct: false },
+            { text: "To store nuclear waste", correct: false }
+        ]
+    },
+    {
+        question: "What is one benefit of Small Modular Reactors (SMRs)?",
+        answers: [
+            { text: "They are easier to transport and deploy", correct: true },
+            { text: "They generate more waste", correct: false },
+            { text: "They require more land", correct: false },
+            { text: "They are outdated technology", correct: false }
+        ]
+    },
+    {
+        question: "What is nuclear fusion expected to solve compared to nuclear fission?",
+        answers: [
+            { text: "High waste production", correct: true },
+            { text: "Low energy output", correct: false },
+            { text: "High carbon emissions", correct: false },
+            { text: "High uranium costs", correct: false }
+        ]
+    },
+    {
+        question: "What type of fuel is primarily used in nuclear fission reactors?",
+        answers: [
+            { text: "Coal", correct: false },
+            { text: "Uranium", correct: true },
+            { text: "Natural Gas", correct: false },
+            { text: "Hydrogen", correct: false }
+        ]
+    },
+    {
+        question: "Which country pioneered the use of nuclear energy for electricity?",
+        answers: [
+            { text: "United Kingdom", correct: true },
+            { text: "United States", correct: false },
+            { text: "Japan", correct: false },
+            { text: "Germany", correct: false }
+        ]
+    },
+    {
+        question: "What is the key advantage of nuclear energy compared to fossil fuels?",
+        answers: [
+            { text: "It is cheaper to generate", correct: false },
+            { text: "It produces zero carbon emissions during operation", correct: true },
+            { text: "It does not require maintenance", correct: false },
+            { text: "It can be generated without uranium", correct: false }
+        ]
+    },
+    {
+        question: "What disaster led to Germany accelerating its nuclear phase-out?",
+        answers: [
+            { text: "Three Mile Island", correct: false },
+            { text: "Fukushima", correct: true },
+            { text: "Chernobyl", correct: false },
+            { text: "Hanford", correct: false }
+        ]
+    },
+    {
+        question: "Which country generates the highest percentage of electricity from nuclear power?",
+        answers: [
+            { text: "United States", correct: false },
+            { text: "France", correct: true },
+            { text: "Russia", correct: false },
+            { text: "China", correct: false }
+        ]
+    },
+    {
+        question: "Why is nuclear waste a significant concern?",
+        answers: [
+            { text: "It produces carbon emissions", correct: false },
+            { text: "It remains radioactive for thousands of years", correct: true },
+            { text: "It requires no storage", correct: false },
+            { text: "It can be used as fuel again immediately", correct: false }
+        ]
+    },
+    {
+        question: "What is ITER, the large-scale nuclear fusion project?",
+        answers: [
+            { text: "A new type of fission reactor", correct: false },
+            { text: "An international nuclear fusion research project", correct: true },
+            { text: "A nuclear waste disposal site", correct: false },
+            { text: "A program to decommission reactors", correct: false }
+        ]
+    },
+    {
+        question: "Why is uranium enrichment necessary for nuclear reactors?",
+        answers: [
+            { text: "To make uranium suitable for bombs", correct: false },
+            { text: "To increase the percentage of U-235 for energy production", correct: true },
+            { text: "To reduce the cost of uranium", correct: false },
+            { text: "To make uranium renewable", correct: false }
+        ]
+    },
+    {
+        question: "Which organization regulates nuclear safety worldwide?",
+        answers: [
+            { text: "UNESCO", correct: false },
+            { text: "IAEA", correct: true },
+            { text: "WHO", correct: false },
+            { text: "IMF", correct: false }
+        ]
+    },
+    {
+        question: "What caused the explosion at Chernobyl?",
+        answers: [
+            { text: "A terrorist attack", correct: false },
+            { text: "Reactor design flaws and operator errors", correct: true },
+            { text: "A natural disaster", correct: false },
+            { text: "Fuel shortages", correct: false }
+        ]
+    },
+    {
+        question: "What is a primary challenge of nuclear fusion?",
+        answers: [
+            { text: "High carbon emissions", correct: false },
+            { text: "Sustaining the reaction at high temperatures", correct: true },
+            { text: "Lack of fuel sources", correct: false },
+            { text: "Low energy output", correct: false }
+        ]
+    },
+    {
+        question: "What was the first nuclear-powered submarine?",
+        answers: [
+            { text: "USS Enterprise", correct: false },
+            { text: "USS Nautilus", correct: true },
+            { text: "HMS Vanguard", correct: false },
+            { text: "K-19", correct: false }
+        ]
+    },
+    {
+        question: "What is a breeder reactor designed to do?",
+        answers: [
+            { text: "Reduce waste production", correct: false },
+            { text: "Generate more fuel than it consumes", correct: true },
+            { text: "Operate without cooling systems", correct: false },
+            { text: "Work with renewable fuels", correct: false }
+        ]
+    },
+    {
+        question: "Which material is commonly used as a moderator in nuclear reactors?",
+        answers: [
+            { text: "Graphite", correct: true },
+            { text: "Iron", correct: false },
+            { text: "Lead", correct: false },
+            { text: "Silver", correct: false }
+        ]
+    },
+    {
+        question: "What are thorium reactors being researched for?",
+        answers: [
+            { text: "To produce weapons-grade material", correct: false },
+            { text: "To provide a safer and more abundant alternative to uranium", correct: true },
+            { text: "To eliminate waste disposal", correct: false },
+            { text: "To replace renewable energy", correct: false }
+        ]
+    },
+    {
+        question: "Which treaty aims to prevent the spread of nuclear weapons?",
+        answers: [
+            { text: "Nuclear Energy Act", correct: false },
+            { text: "Non-Proliferation Treaty", correct: true },
+            { text: "Kyoto Protocol", correct: false },
+            { text: "Paris Agreement", correct: false }
+        ]
+    },
+    {
+        question: "Why do nuclear plants require cooling systems?",
+        answers: [
+            { text: "To maintain radioactive waste", correct: false },
+            { text: "To remove heat from the reactor core and prevent overheating", correct: true },
+            { text: "To reduce energy output", correct: false },
+            { text: "To increase uranium efficiency", correct: false }
+        ]
+    }
+]
+
+    let questions = unsorted_questions.sort(() => Math.random() - 0.5).slice(0, 10);
+const questionElement = document.getElementById("question");
+const answerButton = document.getElementById("answer-buttons");
+const nextButton = document.getElementById("next-btn");
+
+let currentQuestionsIndex = 0;
+let score = 0;
+
+function startQuiz()  {
+    currentQuestionsIndex = 0;
+    score = 0;
+    nextButton.innerHTML = 'Next';
+    showQuestion();
+}
+
+function showQuestion() {
+    resetState();
+    let currentQuestion = questions[currentQuestionsIndex];
+    let questionNo = currentQuestionsIndex + 1;
+    questionElement.innerHTML = questionNo + ". " + currentQuestion.question;
+
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement("button");
+        button.innerHTML = answer.text;
+        button.classList.add("btn"); // Corrected class name
+        answerButton.appendChild(button);
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener("click", selectAnswer)
+    });
+}
+
+function resetState() {
+    nextButton.style.display = 'none'
+    while(answerButton.firstChild){
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}
+
+function selectAnswer(e) {
+    const selectedBtn = e.target
+    const isCorrect = selectedBtn.dataset.correct === "true";
+    if (isCorrect) {
+        selectedBtn.classList.add("correct");
+        score++;
+    } else {
+        selectedBtn.classList.add("incorrect"); 
+    }
+    Array.from(answerButton.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
+}
+
+function showScore() {
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = 'Play Again'
+    questions=unsorted_questions.sort(() => Math.random() - 0.5).slice(0, 10);
+    nextButton.style.display = "block";
+}
+
+function handleNextButton() {
+    currentQuestionsIndex++;
+    if (currentQuestionsIndex < questions.length) {
+        showQuestion();
+
+    } else {
+        showScore();
+    }
+}
+
+nextButton.addEventListener("click", () => {
+    if (currentQuestionsIndex < questions.length) {
+        handleNextButton();
+    } else {
+        startQuiz();
+    }
+})
+
+startQuiz();
+  </script>
+</body>
+</html>

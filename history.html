@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The History</title>
+    <style>
+        :root {
+    --color-accent-light: #66fcf1;
+    --color-accent-dark: #0b0c10;
+    --color-secondary: #ccc;
+
+    --text-color-default: #2c2c2c;
+    --text-color-light: #fff;
+
+    --font-size-default: 20px;
+    --font-size-lg: 30px;
+
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-default: var(--font-weight-regular);
+
+    --border-color-default: var(--color-secondary);
+    --border-color-accent: var(--color-accent-dark);
+
+    --bg-color-default: #fff;
+    --bg-color-dark: #2c2c2c;
+    --bg-color-accent--lignt: var(--color-accent-light);
+    --bg-color-accent--dark: var(--color-accent-dark);
+
+    --transition-duration: .2s;
+    --transition-timing-function: linear;
+    --transition-delay: 0s;
+
+    --negative-multiplier: -1;
+
+    --gradient-default: linear-gradient(122deg, var(--color-accent-light) 0%, var(--color-accent-dark) 100%);
+
+}
+.cd__main{
+   display: block !important;
+}
+
+
+/* EXAMPLE STYLES: YOU DON'T NEED THEM!!! */
+.header {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}
+
+.header__btns {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+body a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.header__btn {
+    transition:
+            all
+            var(--transition-duration)
+            var(--transition-timing-function)
+            var(--transition-delay);
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: var(--bg-color-default);
+    border: 1px solid var(--border-color-default);
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+}
+
+.header__btn:hover,
+.header__btn.js-active {
+    color: var(--text-color-light);
+    background-color: var(--bg-color-dark);
+}
+
+.header__title {
+    margin-bottom: 10px;
+    font-weight: var(--font-weight-semibold);
+    color:white;
+}
+
+.content {
+    margin: 50px auto;
+}
+
+.content__title {
+    margin-bottom: 80px;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-default);
+    text-align: center;
+}
+
+/* TIMELINE STYLES: YOU NEED THEM!!! */
+.timeline {
+    --wrapper-width: 900px;
+
+    width: 95%;
+    max-width: var(--wrapper-width);
+    margin: auto;
+}
+
+.timeline__stepper {
+    --step-border-width: 3px;
+    --offset-to-slider-content: 30px;
+
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: var(--offset-to-slider-content);
+}
+
+@media(min-width: 530px) {
+    .timeline__stepper {
+        display: flex;
+        justify-content: space-around;
+        gap: 0;
+    }
+}
+
+@media(min-width: 700px) {
+    .timeline__stepper {
+        --offset-to-slider-content: 50px;
+    }
+}
+
+.timeline__step {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+@media(min-width: 530px) {
+    .timeline__step {
+        width: 100%;;
+    }
+}
+
+.timeline__icon {
+    --timeline-icon-dimensions: 45px;
+
+    position: relative;
+    display: block;
+    width: var(--timeline-icon-dimensions);
+    max-height: var(--timeline-icon-dimensions);
+    height: auto;
+    fill:white;
+    margin: 0 auto;
+    transition: opacity var(--transition-duration) var(--transition-timing-function) var(--transition-delay);
+}
+
+@media(min-width: 700px) {
+    .timeline__icon {
+        --timeline-icon-dimensions: 60px;
+
+        margin-bottom: 30px;
+    }
+}
+
+.timeline__icon--active {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    fill: url(#icon-gradient);
+    opacity: 0;
+}
+
+.timeline__step-title {
+    --timeline-dot-dimensions: 11px;
+    --extra-offset-fox-pixelperfect: -1px;
+
+    position: relative;
+    display: none;
+    padding-top: 30px;
+    margin-bottom: 0;
+    text-align: center;
+    line-height: 1.7;
+    border-top: var(--step-border-width) solid var(--border-color-default);
+    color:white;
+}
+
+@media(min-width: 700px) {
+    .timeline__step-title {
+        display: block;
+    }
+}
+
+.timeline__step-title:before,
+.timeline__step-title:after {
+    position: absolute;
+    top: var(--dot-top-position);
+    left: 50%;
+    display: block;
+    width: var(--timeline-dot-dimensions);
+    height: var(--timeline-dot-dimensions);
+    content: '';
+    border-radius: 50%;
+}
+
+.timeline__step-title:before {
+    --dot-top-position: calc(
+            var(--timeline-dot-dimensions)/2 * var(--negative-multiplier) + var(--extra-offset-fox-pixelperfect)
+    );
+
+    transform: translate(-50%);
+    border: 2px solid var(--border-color-default);
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: 5;
+}
+
+.timeline__step-title:after {
+    --timeline-dot-dimensions: 25px;
+    --dot-top-position: calc(
+            var(--timeline-dot-dimensions)/2 * var(--negative-multiplier) + var(--extra-offset-fox-pixelperfect)
+    );
+
+    transform: translate(-50%) scale(0);
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+/* this elements generates in JS */
+.timeline__step-active-marker {
+    --slide-pos-y: none; /* calcs on the fly in js */
+    --slide-pos-x: none; /* calcs on the fly in js */
+    --slide-width: auto; /* calcs on the fly in js */
+
+    --transition-timing-function: cubic-bezier(0, 0, 0, 1.2);
+
+    position: absolute;
+    top: var(--slide-pos-y);
+    left: 0;
+    display: none;
+    width: var(--slide-width);
+    height: var(--step-border-width);
+    transform: translateX(var(--slide-pos-x));
+    transition: transform var(--transition-duration) var(--transition-timing-function) var(--transition-delay);
+    background-image: var(--gradient-default);
+}
+
+@media(min-width: 700px) {
+    .timeline__step-active-marker {
+        display: block;
+    }
+}
+
+.timeline__step.is-active {
+    cursor: default;
+}
+
+.timeline__step.is-active .timeline__step-title {
+    font-weight: var(--font-weight-semibold);
+    color:#66fcf1;
+}
+
+.timeline__step.is-active .timeline__step-title:before {
+    transition: background-color var(--transition-duration) var(--transition-timing-function) var(--transition-delay);
+    background-color: var(--color-accent-dark);
+    border-color: var(--border-color-accent);
+}
+
+.timeline__step.is-active .timeline__step-title:after {
+    transform: translate(-50%) scale(1);
+    transition: transform var(--transition-duration) var(--transition-timing-function) var(--transition-delay);
+    background-image: var(--gradient-default);
+    opacity: .35;
+}
+
+.timeline__step.is-active .timeline__icon--default,
+.timeline__step:not(.is-active):hover .timeline__icon--default {
+    opacity: 0;
+}
+
+.timeline__step.is-active .timeline__icon--active,
+.timeline__step:not(.is-active):hover .timeline__icon--active {
+    opacity: 1;
+}
+
+.timeline__slides {
+    --slides-container-height: 0px; /* calcs on the fly in js */
+
+    --content-offset-x: 20px;
+    --content-offset-y: 30px;
+
+    --decoration-blur-spread: 20px;
+    --decoration-opacity: .7;
+    --decoration-pos-x: 0;
+    --decoration-pos-y: 20px;
+    --decoration-scale: 1;
+
+    position: relative;
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+    height: var(--slides-container-height);
+    border-radius: 5px;
+    background-color: var(--bg-color-default);
+}
+
+@media(min-width: 700px) {
+    .timeline__slides {
+        --content-offset-x: 30px;
+        --content-offset-y: 40px;
+    }
+}
+
+.timeline__slides:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    opacity: var(--decoration-opacity);
+    background-image: var(--gradient-default);
+    filter: blur(var(--decoration-blur-spread));
+    transform: translate3d(var(--decoration-pos-x), var( --decoration-pos-y), 0) scale(var(--decoration-scale));
+    z-index: -1;
+}
+
+.timeline__slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: var(--content-offset-y) var(--content-offset-x);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.timeline__slide.is-active {
+    transition: opacity var(--transition-duration) var(--transition-timing-function) var(--transition-delay);
+    opacity: 1;
+    visibility: visible;
+}
+
+.timeline__slide-title {
+    margin-top: 0;
+}
+
+.timeline__slide-content {
+    line-height: 1.7;
+}
+
+.timeline__slide-content p:first-child {
+    margin-top: 0;
+}
+
+.timeline__slide-content p:last-child {
+    margin-bottom: 0;
+}
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--font-size-default);
+    color: var(--text-color-default);
+    background-image: linear-gradient(135deg, #0b0c10, #1f2833);
+    height: 100%;
+}
+#return{
+    position:absolute;
+    top:20;
+    left:20px;
+    fill:white;
+}
+#return:hover{
+    fill:#66fcf1;
+    transition:all 1s;
+}
+    </style>
+</head>
+<body>
+    <!--SVG GRADIENTS AND SPRITES PART-->
+
+
+
+    <svg aria-hidden="true" focusable="false" style="width:0;height:0;position:absolute;">
+        <linearGradient id="icon-gradient">
+          <stop offset="0%" stop-color="var(--color-accent-light)" />
+          <stop offset="100%" stop-color="var(--color-accent-dark)" />
+        </linearGradient>
+        <defs>
+            <symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="" id="icon-brain"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill="" d="M177.746 465.133a111.134 111.134 0 0 0 24.98 10.73 123.6 123.6 0 0 1-165.845-169.69c2.617 9.252 7.46 19.842 14.427 31.56 13.57 22.786 35.29 49.784 59.59 74.084 23.174 23.175 46.923 42.115 66.85 53.316zM317.31 21.616l-66.85 66.85 173.69 173.69 66.85-66.85zM259.29 162.62l89.473 89.474 44.895 5.958L254.095 118.49zm81.522 107.348c-15.575 34.527-65.865 141.216-108.848 184.222-37.728 37.73-206.412-143.08-174.746-174.746 42.772-42.772 149.977-91.478 185.478-106.866l97.342 97.343zM203.008 355.1a33.014 33.014 0 0 1-31.794-8.55l-24.77 24.77a68.022 68.022 0 0 0 65.56 17.663zm-40.24-40.472a33.014 33.014 0 0 1 23.457-23.34l-8.983-33.893a68.022 68.022 0 0 0-48.284 48.167zm41.86-1.43a14.238 14.238 0 1 0 0 20.136 14.238 14.238 0 0 0 0-20.196zm38.044-38.047l-24.77 24.77a33.014 33.014 0 0 1 8.503 31.96l33.847 9.16a68.022 68.022 0 0 0-17.592-65.947z"></path></g></symbol>
+            <symbol viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg" id="icon-bulb"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.5C12 3.32843 11.3284 4 10.5 4C9.67157 4 9 3.32843 9 2.5C9 1.67157 9.67157 1 10.5 1C11.3284 1 12 1.67157 12 2.5ZM12.5 8C12.5 8.69036 11.9404 9.25 11.25 9.25C10.5596 9.25 10 8.69036 10 8C10 7.30964 10.5596 6.75 11.25 6.75C11.9404 6.75 12.5 7.30964 12.5 8ZM14 6.25C14.6904 6.25 15.25 5.69036 15.25 5C15.25 4.30964 14.6904 3.75 14 3.75C13.3096 3.75 12.75 4.30964 12.75 5C12.75 5.69036 13.3096 6.25 14 6.25ZM14.25 16C14.25 16.6904 13.6904 17.25 13 17.25C12.3096 17.25 11.75 16.6904 11.75 16C11.75 15.3096 12.3096 14.75 13 14.75C13.6904 14.75 14.25 15.3096 14.25 16ZM7 4C6.44772 4 6 4.44772 6 5C6 5.55228 6.44772 6 7 6V17C7 18.2771 7.36899 19.7475 8.24434 20.925C9.14634 22.1384 10.5622 23 12.5 23C14.4378 23 15.8537 22.1384 16.7557 20.925C17.631 19.7475 18 18.2771 18 17V6C18.5523 6 19 5.55228 19 5C19 4.44772 18.5523 4 18 4H17C16.4477 4 16 4.4481 16 5.00038V11.4951C15.5545 11.7798 15.0357 12 14.5 12C14.0145 12 13.5205 11.8191 12.7945 11.5421C12.1797 11.3074 11.3739 11 10.5 11C9.94435 11 9.43418 11.1205 9 11.2806L9 5C9 4.45533 8.54467 4 8 4H7ZM14.5 14C15.0557 14 15.5658 13.8795 16 13.7194V17C16 17.932 15.7232 18.9616 15.1506 19.7318C14.6047 20.4662 13.7705 21 12.5 21C11.2295 21 10.3953 20.4662 9.84941 19.7318C9.27685 18.9616 9 17.932 9 17L9 13.5049C9.44553 13.2202 9.96432 13 10.5 13C10.9855 13 11.4795 13.1809 12.2055 13.4579C12.8203 13.6926 13.6261 14 14.5 14Z" fill=""></path> </g></symbol>
+            <symbol fill="" id="icon-rocket" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" class="icon"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M917 211.1l-199.2 24c-6.6.8-9.4 8.9-4.7 13.6l59.3 59.3-226 226-101.8-101.7c-6.3-6.3-16.4-6.2-22.6 0L100.3 754.1a8.03 8.03 0 0 0 0 11.3l45 45.2c3.1 3.1 8.2 3.1 11.3 0L433.3 534 535 635.7c6.3 6.2 16.4 6.2 22.6 0L829 364.5l59.3 59.3a8.01 8.01 0 0 0 13.6-4.7l24-199.2c.7-5.1-3.7-9.5-8.9-8.8z"></path> </g></symbol>
+          <symbol viewBox="-39.34 0 230.34 230.34" xmlns="http://www.w3.org/2000/svg" fill="" id="icon-target"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><g id="Layer_2" data-name="Layer 2"> <g id="Layer_1-2" data-name="Layer 1"> <path d="M92.17,118.09c-.87,3-2,5.42-2.19,7.88-.73,9.66-2.85,19.27-1,29.06.62,3.32-.43,4.7-3.49,6a19.65,19.65,0,0,1-4.08,1.26,62.72,62.72,0,0,1-28.93-.9,46.2,46.2,0,0,1-7.8-3.54c-3.16-1.56-4.35-4.18-4.37-7.7,0-13.46-.53-26.91-.26-40.36.13-6.54,1.4-13.07,2.45-19.56A31.16,31.16,0,0,1,48,77.63c4.15-1.38,8.45-.92,12.7-.86a83.38,83.38,0,0,0,23.79-3c3.65-1,6.89-2.76,9-6.16a9.27,9.27,0,0,0,.49-9.74C89.2,48.57,82,44.93,72,47.79c-14.47,4.13-25.56,12.5-31.67,26.72-2.92,6.8-5,7.77-11.79,5.93a16.71,16.71,0,0,1-4.79-1.84C16.57,73.9,9.43,69.14,2.39,64.23.1,62.64-.4,60.33.28,57.41a34.36,34.36,0,0,1,6.2-13.08A152.75,152.75,0,0,1,41.1,11.24C48.57,6,57.21,4,65.89,2.08,76.63-.3,87.27-.87,98.22,1.6A52.15,52.15,0,0,1,126,17.54c4.64,5.06,9,10.39,13.23,15.81a59.23,59.23,0,0,1,11.09,24.82c4.65,22.12-3.36,39.08-20.11,53-6.1,5.06-13.15,6.7-20.74,6.89C104.06,118.2,98.63,118.09,92.17,118.09Zm-12.63,35.2c.24-1.8.58-3.73.74-5.68.5-6,.79-12,1.45-18,.56-5.12,1.56-10.19,2.28-15.29.43-3,2.27-4.54,5-5a25.09,25.09,0,0,1,5.11-.44c5.16.12,10.31.29,15.45.6a19.35,19.35,0,0,0,10-1.67c10.44-5.26,18.35-13,21.34-24.48,2.56-9.8,2.67-19.8-1.26-29.54a59.65,59.65,0,0,0-8.88-15.6c-3.81-4.66-7.39-9.52-11.42-14-6.26-6.9-13.68-12.07-23-14.34C79.58,5.71,63.56,8.48,48.09,15.8a31,31,0,0,0-4.32,2.8C32.19,26.74,22.38,36.75,13.49,47.66c-2.29,2.81-4.82,5.72-4.93,9.64A68.21,68.21,0,0,0,32.27,73.21l4.27-7.15c3.4-5.68,7-11.24,12.52-15.09,8.08-5.64,17-9.86,26.67-11.32,13.48-2,23.84,4.81,27.91,19.59a14.25,14.25,0,0,1-.76,9.28C100.34,74.66,96.25,79,89.71,81.09a68.91,68.91,0,0,1-21.95,3.45c-4.51,0-9.07-.48-13.29.43-3.58,5-4,10.56-4.28,16-.72,13.39-1.19,26.79-1.67,40.19A56.2,56.2,0,0,0,49,147.5C59.45,154.9,67.7,156.45,79.54,153.29Z"></path> <path d="M65,230.31a27.48,27.48,0,0,1-26.76-17.82,20.66,20.66,0,0,1-1.56-10.07c1.21-9.33,4.72-17.43,11.77-24.13,6.5-6.19,13.47-7.72,22-5.49,5.61,1.47,11.06,2.83,15.42,6.95,6.45,6.08,9.93,13.2,8.3,22.27-.25,1.41-.38,2.84-.62,4.25C90.9,221.87,80.84,230.33,65,230.31ZM66.79,222a38.22,38.22,0,0,0,5.94-1.33c7.75-2.77,14.61-13.85,13.67-21.93a16.51,16.51,0,0,0-1.31-4c-4-10.17-12.6-13.4-22.46-14.34A9,9,0,0,0,57,181.82c-6,4.3-10.38,10.17-11.58,17.39C43.44,211.17,53.14,222.26,66.79,222Z"></path> <path class="cls-1" d="M79.54,153.29C67.7,156.45,59.45,154.9,49,147.5a56.2,56.2,0,0,1-.43-6.38c.48-13.4.95-26.8,1.67-40.19.3-5.4.7-10.91,4.28-16,4.22-.91,8.78-.45,13.29-.43a68.91,68.91,0,0,0,21.95-3.45c6.54-2.14,10.63-6.43,13.17-12.57a14.25,14.25,0,0,0,.76-9.28C99.57,44.46,89.21,37.61,75.73,39.65,66,41.11,57.14,45.33,49.06,51c-5.53,3.85-9.12,9.41-12.52,15.09l-4.27,7.15A68.21,68.21,0,0,1,8.56,57.3c.11-3.92,2.64-6.83,4.93-9.64,8.89-10.91,18.7-20.92,30.28-29.06a31,31,0,0,1,4.32-2.8C63.56,8.48,79.58,5.71,96.5,9.87c9.27,2.27,16.69,7.44,23,14.34,4,4.44,7.61,9.3,11.42,14a59.65,59.65,0,0,1,8.88,15.6c3.93,9.74,3.82,19.74,1.26,29.54-3,11.45-10.9,19.22-21.34,24.48a19.35,19.35,0,0,1-10,1.67c-5.14-.31-10.29-.48-15.45-.6a25.09,25.09,0,0,0-5.11.44c-2.78.5-4.62,2-5,5-.72,5.1-1.72,10.17-2.28,15.29-.66,6-1,12-1.45,18C80.12,149.56,79.78,151.49,79.54,153.29Z"></path> <path class="cls-1" d="M66.79,222c-13.65.28-23.35-10.81-21.37-22.77C46.62,192,51,186.12,57,181.82a9,9,0,0,1,5.63-1.47c9.86.94,18.43,4.17,22.46,14.34a16.51,16.51,0,0,1,1.31,4c.94,8.08-5.92,19.16-13.67,21.93A38.22,38.22,0,0,1,66.79,222Z"></path> </g> </g> </g></symbol>
+          <symbol fill="" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 578.346 578.346" xml:space="preserve" id="icon-seo"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon points="523.94,374.709 477.3,374.709 477.3,228 301.53,228 301.53,374.709 254.891,374.709 389.415,578.346 "></polygon> <polygon points="276.815,350.346 276.815,203.637 323.46,203.637 188.932,0 54.405,203.637 101.049,203.637 101.049,350.346 "></polygon> </g> </g> </g></symbol>
+          <symbol fill="" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" id="icon-customers"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M17 16a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4.01V4a1 1 0 0 1 1-1 1 1 0 0 1 1 1v6h1V2a1 1 0 0 1 1-1 1 1 0 0 1 1 1v8h1V1a1 1 0 1 1 2 0v9h1V2a1 1 0 0 1 1-1 1 1 0 0 1 1 1v13h1V9a1 1 0 0 1 1-1h1v8z"></path></g></symbol>
+          <symbol viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg" id="questionable"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M4 21V19.5C4 16.4624 6.46243 14 9.5 14H12.5C15.5376 14 18 16.4624 18 19.5V21M7 21V18M15 21V18M16.5 6L16.8367 5.49493C17.1969 4.95461 17.9371 4.82782 18.4566 5.21745C19.0073 5.63047 19.0645 6.43549 18.5778 6.92224L17.8536 7.64645C17.6272 7.87282 17.5 8.17986 17.5 8.5M17.5 10V10.2M13.8281 4.89801C14.6435 3.74945 15.9842 3 17.5 3C19.9853 3 22 5.01472 22 7.5C22 9.98528 19.9853 12 17.5 12C16.2549 12 15.1279 11.4943 14.3131 10.6771M15 8.00001C15 5.79086 13.2091 4 11 4C8.79086 4 7 5.79086 7 8.00001C7 10.2092 8.79086 12 11 12C11.8312 12 12.6032 11.7465 13.2429 11.3125C14.3033 10.5931 15 9.37794 15 8.00001Z" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"></path></g></symbol>
+        </defs>
+      </svg>
+  <!--END SVG GRADIENT PART-->
+  <a href="index.html"><svg id="return"fill="" width="60px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>return</title> <path d="M0 21.984q0.032-0.8 0.608-1.376l4-4q0.448-0.48 1.056-0.576t1.12 0.128 0.864 0.736 0.352 1.12v1.984h18.016q0.8 0 1.408-0.576t0.576-1.408v-8q0-0.832-0.576-1.408t-1.408-0.608h-16q-0.736 0-1.248-0.416t-0.64-0.992 0-1.152 0.64-1.024 1.248-0.416h16q2.464 0 4.224 1.76t1.76 4.256v8q0 2.496-1.76 4.224t-4.224 1.76h-18.016v2.016q0 0.64-0.352 1.152t-0.896 0.704-1.12 0.096-1.024-0.544l-4-4q-0.64-0.608-0.608-1.44z"></path> </g></svg></a>
+  <header class="header">
+    <h1 class="header__title">Nuclear Timeline</h1>
+  </header>
+  <div class="content">
+    <div class="container">
+      <div class="timeline">
+        <div class="timeline__stepper">
+          <div class="timeline__step is-active">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-brain"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#icon-brain"/>
+            </svg>
+            <p class="timeline__step-title">
+              1940's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-bulb"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#icon-bulb"/>
+            </svg>
+            <p class="timeline__step-title">
+              1950's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-rocket"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">>
+              <use href="#icon-rocket"/>
+            </svg>
+            <p class="timeline__step-title">
+              1960's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-target"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#icon-target"/>
+            </svg>
+            <p class="timeline__step-title">
+              1970's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-seo"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#icon-seo"/>
+            </svg>
+            <p class="timeline__step-title">
+              1980's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#icon-customers"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#icon-customers"/>
+            </svg>
+            <p class="timeline__step-title">
+              1990's
+            </p>
+          </div>
+          <div class="timeline__step">
+            <svg class="timeline__icon timeline__icon--default">
+              <use href="#questionable"/>
+            </svg>
+            <svg class="timeline__icon timeline__icon--active">
+              <use href="#questionable"/>
+            </svg>
+            <p class="timeline__step-title">
+              2000's
+            </p>
+          </div>
+        </div>
+  
+        <div class="timeline__slides">
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1940s: The Birth of Nuclear Energy</h3>
+            <div class="timeline__slide-content">
+              <p>
+
+                The 1940s marked the inception of nuclear energy, driven primarily by military applications. In 1942, Enrico Fermi and his team successfully conducted the first controlled nuclear chain reaction under the stands of the University of Chicago’s Stagg Field. This pivotal moment laid the groundwork for the Manhattan Project, a top-secret U.S. initiative to develop nuclear weapons during World War II. By 1945, the project culminated in the atomic bombings of Hiroshima and Nagasaki, which caused unprecedented destruction, killing over 200,000 people and demonstrating the terrifying potential of nuclear energy.
+                <br>
+                <br>
+                In hindsight, these events showed both the promise and peril of nuclear technology. While it could end wars, its destructive power demanded strict international oversight. The formation of the U.S. Atomic Energy Commission in 1946 was a direct response, aiming to control and regulate nuclear energy for both civilian and military use. By the end of the decade, the nuclear arms race had begun, as the Soviet Union detonated its first nuclear bomb in 1949, escalating global tensions.</p>
+            </div>
+          </div>
+  
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1950s: The Dawn of Civilian Nuclear Power</h3>
+            <div class="timeline__slide-content">
+              <p>
+                The 1950s saw nuclear energy transition from a purely military tool to a source of civilian power. In 1951, the Experimental Breeder Reactor I in Idaho became the first reactor to produce usable electricity, though on a very small scale. This breakthrough was followed by the opening of the Obninsk Nuclear Power Plant in Russia in 1954, the world’s first nuclear power station connected to a power grid.
+                <br>
+                <br>
+                The decade also witnessed growing international cooperation. In 1957, the International Atomic Energy Agency (IAEA) was established to promote peaceful uses of nuclear energy while preventing its misuse. However, the first significant nuclear accident—the Windscale fire in the UK in 1957—highlighted the potential dangers. The fire released radioactive contamination, leading to increased scrutiny of reactor designs. Despite this, public enthusiasm for nuclear energy remained high, as it was seen as a symbol of scientific progress and a promising alternative to fossil fuels.</p>
+            </div>
+          </div>
+  
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1960s: Expansion and Optimism</h3>
+            <div class="timeline__slide-content">
+              <p>
+
+                The 1960s were characterized by rapid expansion of nuclear power plants worldwide. Nations viewed nuclear energy as a clean and virtually limitless resource that could meet growing electricity demands. By the end of the decade, countries like France and the United States had begun to heavily invest in nuclear infrastructure.
+                <br>
+                <br>
+                This period also saw significant technological advancements. Reactor designs became more efficient and safer, paving the way for larger-scale plants. In space exploration, the U.S. launched SNAP-10A, the first nuclear-powered satellite, in 1964, showcasing the versatility of nuclear technology. However, the seeds of public concern were being sown, as early environmentalists questioned the long-term safety of nuclear waste and its potential impact on ecosystems.</p>
+            </div>
+          </div>
+  
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1970s: Growth Amid Rising Concerns</h3>
+            <div class="timeline__slide-content">
+              <p>
+                The oil crisis of 1973 brought nuclear energy to the forefront as a viable alternative to oil, spurring construction of new plants worldwide. During this decade, nuclear energy’s share of global electricity generation increased dramatically, and countries like Japan began to heavily invest in the technology to reduce reliance on imported fuel.
+                <br>
+                <br>
+                However, the Three Mile Island accident in 1979 marked a turning point. A partial meltdown at the Pennsylvania plant released a small amount of radioactive material and exposed critical flaws in reactor design and crisis management. While no deaths occurred, the incident fueled public skepticism and led to a slowdown in new plant construction, especially in the United States. In hindsight, this event underscored the need for more stringent safety regulations and improved transparency in the nuclear industry.</p>
+            </div>
+          </div>
+  
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1980s: Triumphs and Tragedies</h3>
+            <div class="timeline__slide-content">
+              <p>
+                The 1980s saw both significant achievements and devastating failures in the nuclear industry. On the one hand, nuclear power generation reached new heights, with countries like France deriving over 70% of their electricity from nuclear sources. On the other hand, the 1986 Chernobyl disaster in Ukraine became the world’s worst nuclear accident. A reactor explosion released massive amounts of radioactive material, contaminating large parts of Europe and forcing the evacuation of over 300,000 people.
+                <br>
+                <br>
+                In hindsight, Chernobyl revealed severe flaws in reactor design and operational protocols, particularly in Soviet-era technology. The disaster led to a global reevaluation of nuclear safety standards, with many nations investing in safer reactor designs and stricter regulatory frameworks. Public trust in nuclear energy, however, suffered a significant blow, leading to protests and policy shifts, particularly in Western Europe. </p>
+            </div>
+          </div>
+  
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">1990s: A Focus on Safety and Regulation</h3>
+            <div class="timeline__slide-content">
+              <p>
+                Following the Chernobyl disaster, the 1990s were defined by efforts to rebuild public trust and enhance safety. International cooperation increased, with organizations like the IAEA introducing rigorous safety standards and conducting regular inspections. The Comprehensive Nuclear-Test-Ban Treaty (CTBT), adopted in 1996, aimed to curb nuclear weapons testing, reflecting a broader global desire to manage nuclear risks.
+                <br>
+                <br>
+                Despite these measures, public opposition to nuclear energy grew, particularly in countries like Germany, which began planning for a gradual phase-out. Construction of new reactors slowed significantly, and the industry shifted its focus to maintaining existing plants and managing nuclear waste. By the end of the decade, the future of nuclear energy was uncertain, with its potential overshadowed by persistent safety and environmental concerns.</p>
+            </div>
+          </div>
+          <div class="timeline__slide">
+            <h3 class="timeline__slide-title">2000s: A Renaissance and Emerging Challenges</h3>
+            <div class="timeline__slide-content">
+              <p>
+                The early 2000s brought renewed interest in nuclear energy as a solution to climate change. With growing awareness of greenhouse gas emissions, nuclear power was championed as a low-carbon energy source capable of meeting global electricity demands. Countries like China and India began ambitious nuclear expansion programs, while advanced reactor designs, such as Generation III+ reactors, promised improved safety and efficiency.
+                
+                However, longstanding issues like high construction costs and nuclear waste management continued to pose challenges. Efforts to develop permanent waste repositories, such as the Yucca Mountain project in the U.S., faced political and public opposition. By the end of the decade, the nuclear industry was again at a crossroads, balancing its promise against unresolved concerns.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    "use strict";
+const DOM = {
+    timeline: "timeline",
+    timelineStepper: "timeline__stepper",
+    timelineStep: "timeline__step",
+    timelineStepTitle: "timeline__step-title",
+    timelineStepActive: "is-active",
+    timelineStepActiveMarker: "timeline__step-active-marker",
+    timelineSlidesContainer: "timeline__slides",
+    timelineSlide: "timeline__slide",
+    timelineSlideActive: "is-active",
+};
+const STEP_ACTIVE_MARKEP_CUSTOM_PROPS = {
+    width: "--slide-width",
+    posX: "--slide-pos-x",
+    posY: "--slide-pos-y",
+};
+const SLIDES_CONTAINER_CUSTOM_PROPS = {
+    height: "--slides-container-height",
+};
+const timeline = document.querySelector(`.${DOM.timeline}`);
+const timelineStepper = timeline === null || timeline === void 0 ? void 0 : timeline.querySelector(`.${DOM.timelineStepper}`);
+const timelineStepTitle = timeline === null || timeline === void 0 ? void 0 : timeline.querySelector(`.${DOM.timelineStepTitle}`);
+const timelineSlidesContainer = timeline === null || timeline === void 0 ? void 0 : timeline.querySelector(`.${DOM.timelineSlidesContainer}`);
+const timelineSlides = timeline && Array.from(timeline.querySelectorAll(`.${DOM.timelineSlide}`));
+window.addEventListener("load", () => {
+    createStepActiveMarker();
+    activateCurrentSlide();
+});
+window.addEventListener("resize", () => {
+    recalcStepActiveMarkerProps();
+});
+timeline === null || timeline === void 0 ? void 0 : timeline.addEventListener("click", (event) => {
+    const { target } = event;
+    if (!target ||
+        !(target instanceof Element) ||
+        !target.closest(`.${DOM.timelineStep}`)) {
+        return;
+    }
+    const currentStep = target.closest(`.${DOM.timelineStep}`);
+    if (!currentStep) {
+        return;
+    }
+    deactivateSteps();
+    activateCurrentStep(currentStep);
+    recalcStepActiveMarkerProps();
+    deactivateSlides();
+    activateCurrentSlide();
+});
+function deactivateSteps() {
+    const steps = document.querySelectorAll(`.${DOM.timelineStep}`);
+    steps === null || steps === void 0 ? void 0 : steps.forEach((elem) => elem.classList.remove(`${DOM.timelineStepActive}`));
+}
+function activateCurrentStep(currentStep) {
+    currentStep === null || currentStep === void 0 ? void 0 : currentStep.classList.add(`${DOM.timelineStepActive}`);
+}
+function deactivateSlides() {
+    timelineSlides === null || timelineSlides === void 0 ? void 0 : timelineSlides.forEach((elem) => elem.classList.remove(`${DOM.timelineSlideActive}`));
+}
+function activateCurrentSlide() {
+    const currentSlide = getCurrentSlide();
+    if (!currentSlide) {
+        return;
+    }
+    const currentSlideHeight = getCurrentSlideHeight(currentSlide);
+    setSlideContainerHeight(currentSlideHeight);
+    currentSlide.classList.add(`${DOM.timelineSlideActive}`);
+}
+function createStepActiveMarker() {
+    const stepActiveMarker = document.createElement("div");
+    stepActiveMarker.classList.add(`${DOM.timelineStepActiveMarker}`);
+    timelineStepper === null || timelineStepper === void 0 ? void 0 : timelineStepper.appendChild(stepActiveMarker);
+    const positionProps = getStepActiveMarkerProps();
+    if (!positionProps) {
+        return;
+    }
+    setStepActiveMarkerProps(Object.assign({ stepActiveMarker }, positionProps));
+}
+function recalcStepActiveMarkerProps() {
+    const stepActiveMarker = timeline === null || timeline === void 0 ? void 0 : timeline.querySelector(`.${DOM.timelineStepActiveMarker}`);
+    const stepActiveMarkerProps = getStepActiveMarkerProps();
+    if (!stepActiveMarkerProps) {
+        return;
+    }
+    setStepActiveMarkerProps(Object.assign({ stepActiveMarker }, stepActiveMarkerProps));
+}
+function setStepActiveMarkerProps({ stepActiveMarker, posX, posY, width, }) {
+    stepActiveMarker.style.setProperty(`${STEP_ACTIVE_MARKEP_CUSTOM_PROPS.width}`, `${width}px`);
+    stepActiveMarker.style.setProperty(`${STEP_ACTIVE_MARKEP_CUSTOM_PROPS.posX}`, `${posX}px`);
+    if (typeof posY === "number") {
+        stepActiveMarker.style.setProperty(`${STEP_ACTIVE_MARKEP_CUSTOM_PROPS.posY}`, `${posY}px`);
+    }
+}
+function getStepActiveMarkerProps() {
+    const { currentStep } = getCurrentStep();
+    if (!currentStep) {
+        return null;
+    }
+    const width = getElementWidth(currentStep);
+    const posX = getStepActiveMarkerPosX(currentStep);
+    const posY = getStepActiveMarkerPosY();
+    if (typeof posX !== "number" || typeof posY !== "number") {
+        return null;
+    }
+    return { posX, posY, width };
+}
+function getCurrentStep() {
+    const timelineSteps = Array.from(document.querySelectorAll(`.${DOM.timelineStep}`));
+    const currentStep = timelineSteps.find((element) => element.classList.contains(`${DOM.timelineStepActive}`));
+    const currentStepIndex = currentStep &&
+        timelineSteps.findIndex((element) => element.classList.contains(`${DOM.timelineStepActive}`));
+    return { currentStep, currentStepIndex };
+}
+function getCurrentSlide() {
+    const { currentStepIndex } = getCurrentStep();
+    if (typeof currentStepIndex !== "number" || !timelineSlides) {
+        return null;
+    }
+    return timelineSlides[currentStepIndex];
+}
+function setSlideContainerHeight(height) {
+    timelineSlidesContainer === null || timelineSlidesContainer === void 0 ? void 0 : timelineSlidesContainer.style.setProperty(`${SLIDES_CONTAINER_CUSTOM_PROPS.height}`, `${height}px`);
+}
+function getCurrentSlideHeight(currentSlide) {
+    return currentSlide.clientHeight;
+}
+function getStepActiveMarkerPosY() {
+    const timelineTitlePosY = timelineStepTitle === null || timelineStepTitle === void 0 ? void 0 : timelineStepTitle.getBoundingClientRect().top;
+    const timelineStepperPosY = timelineStepper === null || timelineStepper === void 0 ? void 0 : timelineStepper.getBoundingClientRect().top;
+    if (!timelineTitlePosY || !timelineStepperPosY) {
+        return null;
+    }
+    return timelineTitlePosY - timelineStepperPosY;
+}
+function getStepActiveMarkerPosX(currentStep) {
+    const timelineStepperPosX = timelineStepper === null || timelineStepper === void 0 ? void 0 : timelineStepper.getBoundingClientRect().left;
+    const currentStepPosX = currentStep.getBoundingClientRect().left;
+    if (!timelineStepperPosX) {
+        return null;
+    }
+    return currentStepPosX - timelineStepperPosX;
+}
+function getElementWidth(elem) {
+    return elem.clientWidth;
+}
+  </script>
+</body>
+</html>
